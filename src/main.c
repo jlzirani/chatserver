@@ -5,7 +5,7 @@
 #include "socket.h"
 #include "chatroom.h"
 
-#define dieIfFail(cond, level, msg) if(cond) { logging(level, msg); exit(1); }
+#define dieIfFail(cond, level) if(cond) { logging(level, #cond); exit(1); }
 
 void incParam(int *argc, char **argv[])
 {
@@ -48,10 +48,10 @@ int main(int argc, char *argv[])
 	logging(1, "Creating socket");
 	server = createSocket( 4000 );
 
-	dieIfFail( !socketIsValid(server) , 4, "Creating socket failed !");
+	dieIfFail( !socketIsValid(server) , 4);
 
 	logging(1, "Binding socket");
-	dieIfFail( socketBind(&server) < 0, 4, "Bind to port failed !");
+	dieIfFail( socketBind(&server) < 0, 4);
 
 	logging(0, "binding addresse %s:%i", server.addr, server.port);
 

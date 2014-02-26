@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
 
-#define dieIfFail(cond, level, msg) if(cond) { logging(level, msg); exit(1); }
+#define dieIfFail(cond, level) if(cond) { logging(level, "Test failed"); exit(1); }
 
 sSocket *initClients(unsigned int maxUser)
 {
@@ -49,7 +50,7 @@ void loop(sSocket server, unsigned int maxUser)
 				max_fd = clients[i].fd > max_fd ?  clients[i].fd : max_fd;
 			}
 
-		dieIfFail( select (max_fd+1, &read_fd_set, NULL, NULL, NULL) < 0, 4, "Select has failed");
+		dieIfFail( select (max_fd+1, &read_fd_set, NULL, NULL, NULL) < 0, 4);
 		logging( 0, "testing all clients");
 		for(i=0; i < maxUser; ++i)
 		{
@@ -95,7 +96,11 @@ void loop(sSocket server, unsigned int maxUser)
 			}
 			else
 			{
+				int i = 0;
 				logging(0,"new client at %i", index);
+				for(; i < maxUser; ++i)
+					if(socketIsValid(clients[i]))
+						socketSend(clients[i], "New client !\n", 13); 	
 				clients[index] = client;
 				socketSend(client, "Welcome !\n", 10);
 			}
