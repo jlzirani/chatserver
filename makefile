@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -pedantic -g
+CFLAGS=-std=gnu99 -Wall -pedantic -g 
 
 all: bin/chatserver
 
