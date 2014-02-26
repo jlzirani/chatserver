@@ -58,7 +58,7 @@ void loop(sSocket server, unsigned int maxUser)
 			{
 				unsigned int j = 0;
 				int size =0;
-				char buffer[255], info[350];
+				char buffer[255];
 				size = socketReceve(client, buffer, 255);
 				
 				if(size <= 0)
@@ -70,8 +70,7 @@ void loop(sSocket server, unsigned int maxUser)
 				else
 				{
 					buffer[size] = '\0';
-					sprintf(info, "%s:%i - %s", client.addr, client.port, buffer);
-					logging(1, info);
+					logging(1, "%s:%i - %s", client.addr, client.port, buffer);
 
 					for(; j < maxUser; ++j)
 						if(socketIsValid(clients[j]) && j != i)
@@ -96,10 +95,7 @@ void loop(sSocket server, unsigned int maxUser)
 			}
 			else
 			{
-				char buffer[30];
-				sprintf(buffer, "new client at %i", index);
-				logging(0,buffer);
-
+				logging(0,"new client at %i", index);
 				clients[index] = client;
 				socketSend(client, "Welcome !\n", 10);
 			}

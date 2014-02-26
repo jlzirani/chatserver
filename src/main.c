@@ -44,7 +44,6 @@ void parseParameter(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	sSocket server;
-	char buffer[30];
 	parseParameter( argc - 1, argv +1);
 	logging(1, "Creating socket");
 	server = createSocket( 4000 );
@@ -54,8 +53,7 @@ int main(int argc, char *argv[])
 	logging(1, "Binding socket");
 	dieIfFail( socketBind(&server) < 0, 4, "Bind to port failed !");
 
-	sprintf(buffer, "binding addresse %s:%i", server.addr, server.port);
-	logging(0, buffer);
+	logging(0, "binding addresse %s:%i", server.addr, server.port);
 
 	logging(1, "Listen to the socket");
 	socketListen(server, 10);
