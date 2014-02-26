@@ -6,7 +6,7 @@ A simple chat server monothread and multiuser in c for linux.
 How to compile
 ==============
 
-$> mkdir bin obj
+$> mkdir bin obj <br/>
 $> make
 
 How to run
