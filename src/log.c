@@ -46,6 +46,7 @@ void loggin( const char* file, const char *func, int line, int level, const char
 
 void init_logger(const char *logger, unsigned int level)
 {
+	triggerLevel = level;
 	if(logger != 0)
 	{
 		if(strncmp(logger, "stdout", 6) == 0)
